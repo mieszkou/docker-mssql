@@ -6,14 +6,15 @@ networks:
 services:
   mssql:
     image: mcr.microsoft.com/mssql/server:${SQL_VER}-latest
+    user: root
     container_name: "${APP_NAME}-sql"
     hostname: "${APP_NAME}-sql"
-    ports:
-      - ${DB_PORT}:1433
     volumes:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./backup:/var/opt/mssql/backup
+    ports:
+      - ${DB_PORT}:1433
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${MSSQL_SA_PASS}
